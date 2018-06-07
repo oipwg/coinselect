@@ -2,9 +2,12 @@ var utils = require('./utils')
 
 // add inputs until we reach or surpass the target value (or deplete)
 // worst-case: O(n)
-module.exports = function accumulative (utxos, outputs, feeRate) {
+module.exports = function accumulative (utxos, outputs, feeRate, extraBytes) {
   if (!isFinite(utils.uintOrNaN(feeRate))) return {}
   var bytesAccum = utils.transactionBytes([], outputs)
+
+  if (!isNaN(extraBytes))
+    bytesAccum += extraBytes
 
   var inAccum = 0
   var inputs = []
